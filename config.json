@@ -1,6 +1,7 @@
 {
-  "target_url": "https://script.google.com/macros/s/AKfycbxCGzRm46YKNiIj3yPLsuRe0j7CQLEnUVEVTKka4bFfPUBl7mM4Va3JkheJkVo3tpdPWA/exec",
   "min_version": "1.0.0",
   "latest_version": "1.0.0",
-  "download_url": ""
+  "download_url": "",
+  "supabase_url": "https://mygdzptfnvuvdzjzuhtu.supabase.co",
+  "supabase_key": "sb_publishable_iYZBokaYVB5IC8b9lhEtlw_l71LxBJ4"
 }
