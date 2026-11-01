@@ -1,0 +1,53 @@
+name: DART crawl
+
+# 저장 위치: vi_config repo 의 .github/workflows/dart_crawl.yml
+# 필요한 repo Secrets (Settings → Secrets and variables → Actions):
+#   DART_SUPABASE_URL        = DART 프로젝트 URL (https://xxxx.supabase.co)
+#   DART_SERVICE_ROLE_KEY    = DART 프로젝트 service_role 키
+#   OPENDART_KEY_CRAWL       = OpenDART API 키#1
+# (public repo 면 Actions 실행시간 무제한. service_role 은 Secrets 라 코드 공개와 무관하게 안전.)
+
+on:
+  schedule:
+    - cron: '10 18 * * *'    # 매일 03:10 KST → 목록(corpCode) 동기화
+    - cron: '*/30 * * * *'   # 30분마다 → 개황 배치 수집(일일 상한까지)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'sync(목록) 또는 crawl(개황)'
+        default: 'crawl'
+        type: choice
+        options: [crawl, sync]
+
+concurrency:
+  group: dart-crawl           # 겹쳐 돌지 않게
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Decide mode
+        id: m
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "10 18 * * *" ]; then
+            echo "mode=sync" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=crawl" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run DART crawler (${{ steps.m.outputs.mode }})
+        env:
+          SUPABASE_URL: ${{ secrets.DART_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.DART_SERVICE_ROLE_KEY }}
+          OPENDART_KEY_CRAWL: ${{ secrets.OPENDART_KEY_CRAWL }}
+          DART_DAILY_CAP: '10000'
+          DART_PER_RUN: '1500'
+          DART_BATCH: '300'
+          DART_CONCURRENCY: '5'
+        run: python dart_crawl.py ${{ steps.m.outputs.mode }}
