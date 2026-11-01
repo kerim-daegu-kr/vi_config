@@ -8,9 +8,9 @@ name: DART crawl
 # (public repo 면 Actions 실행시간 무제한. service_role 은 Secrets 라 코드 공개와 무관하게 안전.)
 
 on:
-  schedule:
-    - cron: '10 18 * * *'    # 매일 03:10 KST → 목록(corpCode) 동기화
-    - cron: '*/30 * * * *'   # 30분마다 → 개황 배치 수집(일일 상한까지)
+  # schedule:
+  #   - cron: '10 18 * * *'    # 매일 03:10 KST → 목록(corpCode) 동기화
+  #   - cron: '*/30 * * * *'   # 30분마다 → 개황 배치 수집(일일 상한까지)
   workflow_dispatch:
     inputs:
       mode:
