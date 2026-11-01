@@ -3,5 +3,7 @@
   "latest_version": "1.0.0",
   "download_url": "",
   "supabase_url": "https://mygdzptfnvuvdzjzuhtu.supabase.co",
-  "supabase_key": "sb_publishable_iYZBokaYVB5IC8b9lhEtlw_l71LxBJ4"
+  "supabase_key": "sb_publishable_iYZBokaYVB5IC8b9lhEtlw_l71LxBJ4",
+  "dart_supabase_url": "https://npkiuwlthfrmjkkcbccs.supabase.co",
+  "dart_supabase_key": "sb_publishable_htQ7d28Gl_zGgGqkbRCr8w_Fp_UU345"
 }
