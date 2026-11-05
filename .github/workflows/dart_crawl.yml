@@ -9,7 +9,7 @@ name: DART crawl
 
 on:
   # schedule:
-  #   - cron: '10 18 * * *'    # 매일 03:10 KST → 목록(corpCode) 동기화
+    - cron: '10 18 * * *'    # 매일 03:10 KST → 목록(corpCode) 동기화
   #   - cron: '*/30 * * * *'   # 30분마다 → 개황 배치 수집(일일 상한까지)
   workflow_dispatch:
     inputs:
