@@ -51,3 +51,9 @@ jobs:
           DART_BATCH: '300'
           DART_CONCURRENCY: '5'
         run: python dart_crawl.py ${{ steps.m.outputs.mode }}
+      - name: Keepalive ping VI          # ← 이 스텝을 추가
+        if: always()
+        run: |
+          curl -s -o /dev/null -w "VI ping %{http_code}\n" \
+            "https://mygdzptfnvuvdzjzuhtu.supabase.co/rest/v1/" \
+            -H "apikey: sb_publishable_iYZBokaYVB5IC8b9lhEtlw_l71LxBJ4" || true
